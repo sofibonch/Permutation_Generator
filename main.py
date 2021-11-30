@@ -7,22 +7,21 @@ import random
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 def find_permute(i, id):
     m = math.factorial(len(id))
-    flag = m / 2
     new_id = ""
-    while len(id) > 2:
-        if i < len(id):
-            j = i
-        else:
-            j = i % len(id)
+    while len(id) > 0:
+        j = i % len(id)
         new_id = new_id + id[j]
+        m = math.factorial(len(id)-1)
+        i = int(i/len(id))
         id = id.replace(id[j], "")
-    if (i < flag):
-        j = 1
-    else:
-        j = 0
-    new_id = new_id + id[j]
-    id = id.replace(id[j], "")
-    new_id = new_id + id
+    #flag = m / 2
+    #if (i < flag):
+    #    j = 1
+    #else:
+    #    j = 0
+    #new_id = new_id + id[j]
+    #id = id.replace(id[j], "")
+    #new_id = new_id + id
     return new_id
 
 
@@ -49,7 +48,7 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print_hi('PyCharm')
-    id = "1234"
+    id = "123456"
     m = math.factorial(len(id))
     print('there are :', m)
     # permlist =gen_permute("1234",0.5)
@@ -57,5 +56,8 @@ if __name__ == '__main__':
     # while i < m:
     #     print(permlist)
     #     i = i + 1
-    for perm in gen_permute("1234", 0.5):
+    count=0
+    for perm in gen_permute(id, 1):
         print(perm)
+        count=count+1
+    print(count,m)
