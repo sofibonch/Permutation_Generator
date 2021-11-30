@@ -1,63 +1,55 @@
-# This is a sample Python script.
 import math
 import random
 
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-def find_permute(i, id):
-    m = math.factorial(len(id))
-    new_id = ""
-    while len(id) > 0:
-        j = i % len(id)
-        new_id = new_id + id[j]
-        m = math.factorial(len(id)-1)
-        i = int(i/len(id))
-        id = id.replace(id[j], "")
-    #flag = m / 2
-    #if (i < flag):
-    #    j = 1
-    #else:
-    #    j = 0
-    #new_id = new_id + id[j]
-    #id = id.replace(id[j], "")
-    #new_id = new_id + id
-    return new_id
-
+def find_permute(i, perm):
+    new_perm = ""
+    while len(perm) > 0:
+        j = i % len(perm)
+        new_perm = new_perm + perm[j]
+        i = int(i / len(perm))
+        perm = perm.replace(id[j], "")
+    return new_perm
 
 def gen_permute(perm, sample_percent):
- #   if not isPermUnique(perm):
-  #      return ""
+    repetition_check(perm)
     num_of_perm = math.factorial(len(perm))
-    modolu_jumps_size = int(sample_percent**-1)
+    modolu_jumps_size = int(sample_percent ** -1)
     for iteration in range(0, num_of_perm, modolu_jumps_size):
         cur_perm = iteration + random.randint(0, modolu_jumps_size - 1)
         yield find_permute(cur_perm, perm)
 
-
-def isPermUnique(perm):
-    # Counting frequency
-    return (max([perm.count(c) for c in perm]) == 1)
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def repetition_check(perm):
+    if max([perm.count(c) for c in perm]) != 1:
+        raise TypeError("all characters in the string must not repeat")
+    return
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-    id = "123456"
+def checkIfDuplicate(permlist):
+    ''' Check if given list contains any duplicates '''
+    for perm in permlist:
+        if permlist.count(permlist) > 1:
+            return perm
+    return "all good"
+
+def get_perm_list(perm):
     m = math.factorial(len(id))
-    print('there are :', m)
-    # permlist =gen_permute("1234",0.5)
-    # i = 0
-    # while i < m:
-    #     print(permlist)
-    #     i = i + 1
-    count=0
+    print('there are :', m, " different permutations")
+    count = 0
+    permlist = []
     for perm in gen_permute(id, 1):
-        print(perm)
-        count=count+1
-    print(count,m)
+        permlist.append(perm)
+        count+=1
+    print(count, m)
+
+def check_string_perm(check):
+    m = math.factorial(len(check))
+    print('there are :', m, " different permutations")
+    for perm in gen_permute(check, 1):
+        if perm == check:
+            return True
+    return False
+def get_perm():
+    check= input("Enter the string you want to check: ")
+    check_string_perm(check)
+if __name__ == '__main__':
+    get_perm()
