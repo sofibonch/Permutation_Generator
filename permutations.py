@@ -14,7 +14,7 @@ class PermGenerator:
         self.check_sample_percent()
         self.modulo_jumps_size = int(self.sample_percent ** -1)
         self.num_of_perm = self.find_num_of_perm()
-        #@property
+
     def __iter__(self):
         if self.sample_percent*len(self.perm)>=1:
             for iteration in range(0, self.num_of_perm, self.modulo_jumps_size):
@@ -43,7 +43,7 @@ class PermGenerator:
             new_perm = new_perm + og_perm[chosen_char]
             perm_id = int(perm_id / len(og_perm))
             og_perm = og_perm.replace(og_perm[chosen_char], "")
-        print(new_perm)
+        #print(new_perm)
         return new_perm
 
     def check_repetition(self):
