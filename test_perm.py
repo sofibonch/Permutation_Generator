@@ -9,6 +9,7 @@ def test_count_sample_percent():
     checking if the amount for the percent that is generated is the right amount
     :return:
     """
+    delta_error=1
     perm_check = "0"
     perm_list = []
     for i in range(1, 8):
@@ -18,7 +19,7 @@ def test_count_sample_percent():
                 perm_list.append(perm_gen)
             sample_size = int(math.factorial(len(perm_check)) * per)
             if perm_list:
-                if len(perm_list) - 1 > sample_size or sample_size > len(perm_list) + 1:
+                if len(perm_list) - delta_error > sample_size or sample_size > len(perm_list) + delta_error:
                     print(perm_check, per)
                     assert False
             else:
