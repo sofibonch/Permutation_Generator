@@ -73,7 +73,7 @@ def check_string_perm(gen):
     if len(check) != len(gen.perm):
         print("the input isn't the same length as the length of the permutation from the stream")
         return False
-    if max([check(c) for c in check]) != 1:
+    if max([check.count(c) for c in check]) != 1:
         print("input is invalid, there is a char that repeats itself")
         return False
     for perm in gen:
@@ -84,7 +84,7 @@ def check_string_perm(gen):
     return False
 
 
-def perm_ruuning():
+def perm_running():
     perm1 = PermGenerator("abc", 1)
     perm2 = PermGenerator("abcd", 0.5)
     perm3 = PermGenerator("abcde", 0.05)
