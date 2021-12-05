@@ -9,7 +9,7 @@ def test_count_sample_percent():
     checking if the amount for the percent that is generated is the right amount
     :return:
     """
-    delta_error=1
+    delta_error = 1
     perm_check = "0"
     perm_list = []
     for i in range(1, 8):
