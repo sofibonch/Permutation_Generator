@@ -70,6 +70,12 @@ def check_string_perm(gen):
     :return: if the string is in the sample return true' else false
     """
     check = input("insert string you would like to check:")
+    if len(check) != len(gen.perm):
+        print("the input isn't the same length as the length of the permutation from the stream")
+        return False
+    if max([check(c) for c in check]) != 1:
+        print("input is invalid, there is a char that repeats itself")
+        return False
     for perm in gen:
         if perm == check:
             print("the input is in the sample stream")
@@ -78,15 +84,15 @@ def check_string_perm(gen):
     return False
 
 
-if __name__ == '__main__':
+def perm_ruuning():
     perm1 = PermGenerator("abc", 1)
     perm2 = PermGenerator("abcd", 0.5)
     perm3 = PermGenerator("abcde", 0.05)
-    perm4 = PermGenerator("abcdefghi", 0.05)
+    perm4 = PermGenerator("abcdefg", 0.05)
     print("generator perm 1 is for string: 'abc' and generates sample stream of all the perm")
     print("generator perm 2 is for string: 'abcd' and generates sample stream of 50% of the perm")
     print("generator perm 3 is for string: abcde' and generates sample stream of 5% of the perm")
-    print("generator perm 3 is for string: abcdefghi' and generates sample stream of 5% of the perm")
+    print("generator perm 3 is for string: abcdefg' and generates sample stream of 5% of the perm")
     print("for checking  your string with perm1:")
     check_string_perm(perm1)
     print("for checking  your string with perm2:")
@@ -95,3 +101,7 @@ if __name__ == '__main__':
     check_string_perm(perm3)
     print("for checking  your string with perm4:")
     check_string_perm(perm4)
+
+
+if __name__ == '__main__':
+    perm_ruuning()
