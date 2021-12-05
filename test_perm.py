@@ -3,6 +3,7 @@ import numpy
 
 
 
+
 def test_count_sample_percent():
     """
     checking if the amount for the percent that is generated is the right amount
@@ -10,20 +11,23 @@ def test_count_sample_percent():
     """
     perm_check = "0"
     perm_list = []
-    for i in range(1, 4):
-        for per in numpy.arange(0.1, 1, 0.1):
+    for i in range(1, 8):
+        for per in numpy.arange(0.1, 1, 0.05):
             gen = PermGenerator(perm_check, per)
             for perm_gen in gen:
                 perm_list.append(perm_gen)
-            if len(perm_check)==0:
-                sample_size=0
+            sample_size = int(math.factorial(len(perm_check)) * per)
+            if perm_list:
+                if len(perm_list) - 1 > sample_size or sample_size > len(perm_list) + 1:
+                    print(perm_check, per)
+                    assert False
             else:
-                sample_size=int(math.factorial(len(perm_check)) * per)
-            if  sample_size!= len(perm_list):
-                assert False
+                if sample_size != 0:
+                    assert False
             del perm_list[:]
         perm_check += str(i)
     assert True
+
 
 def test_all_perms_unique():
     """
@@ -31,11 +35,10 @@ def test_all_perms_unique():
     string size from 1 to 10
     :return:
     """
-    perm_check = '0'
+    perm_check = 'a'
     perm_list = []
 
-    for i in range(1, 8):
-        print(perm_check)
+    for i in range(1,9):
         gen = PermGenerator(perm_check, 1)
         for perm_gen in gen:
             perm_list.append(perm_gen)
@@ -50,7 +53,7 @@ def test_all_perms_unique():
 
 def test_all_perms_are_other_perms():
     """
-    check if all the permutetion the generator is providing are indeed a permutation of the origin string
+    check if all the permutation the generator is providing are indeed a permutation of the origin string
     if they are then when all the generated permutation are sorted then they all are the same string and
     there are n! string of the same permutation
     :return:

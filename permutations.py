@@ -1,5 +1,6 @@
 import math
 import random
+import numpy
 
 
 class PermGenerator:
@@ -11,21 +12,22 @@ class PermGenerator:
         self.perm = perm
         self.sample_percent = sample_percent
         self.check_repetition()
-        self.check_sample_percent()
-        self.modulo_jumps_size = int(self.sample_percent ** -1)
+        self.modulo_jumps_size = self.sample_percent ** -1
         self.num_of_perm = self.find_num_of_perm()
 
     def __iter__(self):
-        if self.sample_percent*len(self.perm)>=1:
-            for iteration in range(0, self.num_of_perm, self.modulo_jumps_size):
-                cur_perm = iteration + random.randint(0, self.modulo_jumps_size - 1)
-                yield self.find_permute(cur_perm)
-        else:
-            yield ""
-    def check_sample_percent(self):
-        if self.sample_percent <= 0 and self.sample_percent > 1:
-            raise ValueError("the sample percent must be more than 0 and less or equal to 1")
-        return
+        """
+        generator of a stream based on the sample percent value
+        the amount of the  iterations is the amount of permutations
+        that needs to be generated based on the sample percent.
+        on each iteration the func is choosing between the first number of the current iteration and
+        the last based on the jump size that is needed.
+        with using floats until the last moment to better the resolution.
+        :return: permutation from the sample stream
+        """
+        for cur_perm in numpy.arange(0, self.num_of_perm, self.modulo_jumps_size):
+            chosen_perm = random.randint(int(cur_perm), int(cur_perm + self.modulo_jumps_size) - 1)
+            yield self.find_permute(chosen_perm)
 
     def find_permute(self, perm_id):
         """
@@ -34,7 +36,7 @@ class PermGenerator:
         iteration the perm_id is the deciding factor which char from the perm to take and insert it in the new
         permutation the decision is base on the perm_id modulo length of the current perm. :param perm_id: the number
         of the permutation
-        :return: the permutetion that correspond to the i
+        :return: the permutation that correspond to the unique perm_id
         """
         og_perm = self.perm
         new_perm = ""
@@ -43,7 +45,6 @@ class PermGenerator:
             new_perm = new_perm + og_perm[chosen_char]
             perm_id = int(perm_id / len(og_perm))
             og_perm = og_perm.replace(og_perm[chosen_char], "")
-        #print(new_perm)
         return new_perm
 
     def check_repetition(self):
@@ -61,36 +62,14 @@ class PermGenerator:
         else:
             return math.factorial(len(self.perm))
 
-# def check_if_duplicate(perm_list):
-#     # Check if given list contains any duplicates
-#     for perm in perm_list:
-#         if perm_list.count(perm_list) > 1:
-#             return perm
-#     return "all good"
-
-
-# def get_perm_list(perm):
-#     m = math.factorial(len(perm))
-#     print('there are :', m, " different permutations")
-#     count = 0
-#     perm_list = []
-#     for rand_perm in gen_permute(perm, 1):
-#         perm_list.append(rand_perm)
-#         count += 1
-#
-#     print(count, m)
-
 
 def check_string_perm(gen):
     """
     (2) checking if a given string is in the sample data
     :param gen: the generator
-    :param check:user input that the user want to check if it's in the permutation sample
     :return: if the string is in the sample return true' else false
     """
     check = input("insert string you would like to check:")
-    m = math.factorial(len(check))
-    print('there are :', m, " different permutations")
     for perm in gen:
         if perm == check:
             print("the input is in the sample stream")
@@ -99,14 +78,20 @@ def check_string_perm(gen):
     return False
 
 
-def get_perm():
-    check = input("Enter the string you want to check: ")
-    if check_string_perm(check):
-        print("found the string in the sample")
-    else:
-        print("didn't found the string in the sample")
-
-
 if __name__ == '__main__':
-    perm1 = PermGenerator("abcde", 1)
+    perm1 = PermGenerator("abc", 1)
+    perm2 = PermGenerator("abcd", 0.5)
+    perm3 = PermGenerator("abcde", 0.05)
+    perm4 = PermGenerator("abcdefghi", 0.05)
+    print("generator perm 1 is for string: 'abc' and generates sample stream of all the perm")
+    print("generator perm 2 is for string: 'abcd' and generates sample stream of 50% of the perm")
+    print("generator perm 3 is for string: abcde' and generates sample stream of 5% of the perm")
+    print("generator perm 3 is for string: abcdefghi' and generates sample stream of 5% of the perm")
+    print("for checking  your string with perm1:")
     check_string_perm(perm1)
+    print("for checking  your string with perm2:")
+    check_string_perm(perm2)
+    print("for checking  your string with perm3:")
+    check_string_perm(perm3)
+    print("for checking  your string with perm4:")
+    check_string_perm(perm4)
