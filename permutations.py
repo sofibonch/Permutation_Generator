@@ -69,6 +69,7 @@ def check_string_perm(gen):
     :param gen: the generator
     :return: if the string is in the sample return true' else false
     """
+    flag=False
     check = input("insert string you would like to check:")
     if len(check) != len(gen.perm):
         print("the input isn't the same length as the length of the permutation from the stream")
@@ -78,30 +79,22 @@ def check_string_perm(gen):
         return False
     for perm in gen:
         if perm == check:
-            print("the input is in the sample stream")
-            return True
-    print("the input isn't in the sample stream")
-    return False
-
+            flag=True
+        print(perm, end=" ")
+    print("\n")
+    if flag:print("the input is in the sample stream\n")
+    else: print("the input isn't in the sample stream\n")
+    return True
 
 def perm_running():
     perm1 = PermGenerator("abc", 1)
-    perm2 = PermGenerator("abcd", 0.5)
-    perm3 = PermGenerator("abcde", 0.05)
-    perm4 = PermGenerator("abcdefg", 0.05)
+    perm2 = PermGenerator("abc", 0.5)
     print("generator perm 1 is for string: 'abc' and generates sample stream of all the perm")
-    print("generator perm 2 is for string: 'abcd' and generates sample stream of 50% of the perm")
-    print("generator perm 3 is for string: abcde' and generates sample stream of 5% of the perm")
-    print("generator perm 3 is for string: abcdefg' and generates sample stream of 5% of the perm")
-    print("for checking  your string with perm1:")
     check_string_perm(perm1)
-    print("for checking  your string with perm2:")
-    check_string_perm(perm2)
-    print("for checking  your string with perm3:")
-    check_string_perm(perm3)
-    print("for checking  your string with perm4:")
-    check_string_perm(perm4)
+    print("generator perm 2 is for string: 'abc' and generates sample stream of 50% of the perm (to stop enter invalid string):")
+    while check_string_perm(perm2):
+        print("for checking  your string with perm2 for 50%:")
 
 
 if __name__ == '__main__':
-    perm_ruuning()
+    perm_running()

@@ -2,8 +2,6 @@ from permutations import *
 import numpy
 
 
-
-
 def test_count_sample_percent():
     """
     checking if the amount for the percent that is generated is the right amount
@@ -39,7 +37,7 @@ def test_all_perms_unique():
     perm_check = 'a'
     perm_list = []
 
-    for i in range(1,9):
+    for i in range(1, 9):
         gen = PermGenerator(perm_check, 1)
         for perm_gen in gen:
             perm_list.append(perm_gen)
