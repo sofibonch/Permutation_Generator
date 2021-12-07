@@ -69,7 +69,7 @@ def check_string_perm(gen):
     :param gen: the generator
     :return: if the string is in the sample return true' else false
     """
-    flag=False
+    flag = False
     check = input("insert string you would like to check:")
     if len(check) != len(gen.perm):
         print("the input isn't the same length as the length of the permutation from the stream")
@@ -79,19 +79,23 @@ def check_string_perm(gen):
         return False
     for perm in gen:
         if perm == check:
-            flag=True
+            flag = True
         print(perm, end=" ")
     print("\n")
-    if flag:print("the input is in the sample stream\n")
-    else: print("the input isn't in the sample stream\n")
+    if flag:
+        print("the input is in the sample stream\n")
+    else:
+        print("the input isn't in the sample stream\n")
     return True
+
 
 def perm_running():
     perm1 = PermGenerator("abc", 1)
     perm2 = PermGenerator("abc", 0.5)
     print("generator perm 1 is for string: 'abc' and generates sample stream of all the perm")
     check_string_perm(perm1)
-    print("generator perm 2 is for string: 'abc' and generates sample stream of 50% of the perm (to stop enter invalid string):")
+    print("generator perm 2 is for string: 'abc' and generates sample stream of 50% of the perm\n")
+    print( "(to stop enter invalid string):")
     while check_string_perm(perm2):
         print("for checking  your string with perm2 for 50%:")
 
